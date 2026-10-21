@@ -1,0 +1,483 @@
+﻿§Livre de règles (brouillon v0.2)
+Système D100 pour un jeu de rôle de science-fiction réaliste sur FoundryVTT. Document de travail pour Marc, octobre 2026.
+
+
+Comment lire ce document : il propose un socle de règles complet mais volontairement simple, pour qu'on puisse le tester vite. Les nombres sont des valeurs de départ, à ajuster après les premières parties. Les choix marqués ⚠ CHOIX OUVERT sont repris avec deux options chacun en fin de document. La dernière section traduit les règles en besoins techniques pour FoundryVTT.
+1. Objectifs de conception
+* Lisible en un coup d'œil : un seul dé (le D100), une seule règle (faire moins que son score). Un joueur qui n'a jamais joué doit comprendre sa feuille en cinq minutes.
+* La physique est un personnage : le vide, les radiations, la gravité et le délai lumière ont des règles concrètes et rapides, pas des descriptions d'ambiance.
+* Mortel mais juste : le combat est rare, bref et dangereux. On peut mourir d'une balle bien placée, mais on voit le danger venir et on a des moyens de l'éviter.
+* La compétence compte plus que la chance : les degrés de réussite récompensent les experts ; les tests prolongés permettent aux compétences techniques de briller.
+* Pensé pour l'automatisation : chaque règle doit pouvoir être calculée par FoundryVTT (jet, degrés, critiques, localisation, dégâts, doses) sans arbitrage compliqué.
+* Des personnages définis par leur origine : naître sur Terre, sur Mars ou dans un habitat de la Ceinture change le corps et la culture, et cela se voit sur la feuille.
+2. Le cœur du système : le jet D100
+Le principe
+Pour tenter une action incertaine, le joueur lance deux dés à dix faces : l'un donne les dizaines, l'autre les unités (un résultat de 00 vaut 100). Il compare le résultat à son score (une compétence ou une caractéristique, modifiée par la difficulté). Si le dé est inférieur ou égal au score, c'est une réussite. Sinon, c'est un échec.
+
+
+Exemple : Lina a 55 en Systèmes de survie. Elle répare un recycleur d'air dans de bonnes conditions (aucun modificateur). Elle lance 38 : réussite.
+
+
+Réussite et échec automatiques : un résultat de 01 à 05 est toujours une réussite critique, un résultat de 96 à 100 est toujours un échec critique, quel que soit le score (voir les critiques ci-dessous).
+Les degrés de réussite (DR)
+On compare simplement le chiffre des dizaines du score et celui du dé. La dizaine d'un nombre est la partie entière de ce nombre divisé par 10 (38 → 3) ; le 00 compte pour 100 (dizaine 10) ; un score de 100 ou plus a une dizaine de 10 ou plus. DR et DE ne descendent jamais sous 0. Arrondis : dans tout le jeu, on arrondit toujours au supérieur (la dizaine, elle, se lit directement et n'est pas un arrondi).
+
+
+* En cas de réussite : DR = dizaine du score moins dizaine du dé. Un résultat de 0 est une réussite de justesse ; chaque degré au-dessus améliore le résultat (plus rapide, plus précis, plus discret, plus de dégâts).
+* En cas d'échec : degrés d'échec (DE) = dizaine du dé moins dizaine du score. À 0 ou 1, l'échec est sans gravité ; à partir de 3, il entraîne une complication.
+* Exemple : avec un score de 55, Lina lance 38. La dizaine du score est 5, celle du dé est 3 : elle obtient 2 DR. Le recycleur est réparé en moitié moins de temps.
+
+
+Pourquoi ce choix : c'est très rapide à lire autour de la table (« je regarde le premier chiffre ») et cela ne demande aucun calcul.
+Les critiques : plages fixes et doubles
+* Réussite critique : un résultat de 01 à 05, quel que soit le score, ou, entre 06 et 95, un double (11, 22… 88) inférieur ou égal au score modifié (après difficulté et modificateurs ; il en va de même pour l'échec critique). L'action réussit de manière exceptionnelle : effet supplémentaire, temps divisé par deux, etc.
+* Échec critique : un résultat de 96 à 100 (00), quel que soit le score, ou, entre 06 et 95, un double supérieur au score. Les plages fixes priment sur les doubles : un 99 est toujours un échec critique, même avec un score de 99 ou plus. Quelque chose tourne mal : arme enrayée, outil cassé, fuite aggravée, contact offensé.
+* L'intérêt des doubles : plus le personnage est compétent, plus il a de chances de faire une réussite critique et moins il risque l'échec critique, sans aucune table à consulter.
+Probabilités de référence
+
+
+Score
+	Réussite
+	Réussite à +2 DR ou plus
+	Réussite critique
+	Échec critique
+	20
+	20 %
+	9 %
+	6 %
+	12 %
+	35
+	35 %
+	19 %
+	8 %
+	10 %
+	50
+	50 %
+	39 %
+	9 %
+	9 %
+	65
+	65 %
+	49 %
+	10 %
+	8 %
+	80
+	80 %
+	69 %
+	12 %
+	6 %
+	95
+	95 %
+	79 %
+	13 %
+	5 %
+	
+
+
+
+Lecture : un personnage moyen (50) réussit une fois sur deux et réussit avec au moins 2 DR quatre fois sur dix. Un expert (80) réussit huit fois sur dix et ne rate de manière critique que six fois sur cent.
+
+
+Décision (18 octobre 2026) : les degrés se comptent par dizaines ; l'option par marge est abandonnée.
+3. Les caractéristiques
+Chaque personnage a neuf caractéristiques, notées de 1 à 100. Un humain ordinaire se situe entre 25 et 45, un personnage de joueur débutant entre 20 et 65, et 80 représente l'élite humaine. Au-delà de 90, on sort du possible sans aide technologique.
+
+
+* Force (FOR) : puissance musculaire, port de charges, corps-à-corps.
+* Constitution (CON) : endurance, résistance aux maladies, aux radiations et aux accélérations.
+* Coordination (COO) : précision des gestes, tir, travail manuel fin, pilotage.
+* Réflexes (RÉF) : vitesse de réaction, esquive, initiative.
+* Adaptation spatiale (ADA) : sens de l'orientation en trois dimensions, aisance en apesanteur et en basse gravité, tolérance au mal de l'espace. C'est la caractéristique propre à ce jeu.
+* Perception (PER) : vigilance, sens, attention aux détails et aux instruments.
+* Intellect (INT) : raisonnement, mémoire, science, technique.
+* Volonté (VOL) : sang-froid, résistance au stress, à l'isolement et à la peur.
+* Présence (PRÉ) : charisme, autorité, empathie, capacité à convaincre.
+Valeurs dérivées
+* Seuil de blessure (SB) : (FOR + CON) / 20, arrondi au supérieur. Sert à mesurer la gravité des blessures. Les Créatures, Synthétiques et Drones ont aussi une FOR, une CON et un SB, ainsi qu'une Perception (PER) propre à chaque modèle.
+* Tolérance aux g (TG) : CON / 20, arrondi au supérieur, modifiée par l'origine. Nombre de g supportables sans test.
+* Endurance : CON / 5, arrondi au supérieur. Points perdus par la fatigue, l'hypoxie, le froid. Le seuil de 0 est symbolique : le personnage qui l'atteint doit réussir immédiatement un test de CON pour rester conscient (sauf Atout contraire) ; s'il réussit, il est Épuisé (-20, appliqué automatiquement aux jets ; le meneur peut retirer l'état).
+* Sang-froid : VOL / 5, arrondi au supérieur. Points perdus face au stress et aux situations traumatisantes.
+* Dose cumulée : compteur de radiation sur toute la vie du personnage, en millisieverts (mSv).
+
+
+⚠ CHOIX OUVERT : neuf caractéristiques sur 100 (proposé) ou caractéristiques plus courtes sur 20, converties en pourcentage. Voir la section 14.[a]
+4. Les compétences
+Une compétence a un score égal à la caractéristique liée plus les points de formation (de 0 à 60). Le jeu compte 38 compétences, réparties en sept domaines. Deux marqueurs, cumulables, remplacent l'ancien marqueur (S) :
+* (F) Formation requise : sans formation, on ne peut tenter la compétence qu'à la moitié de la caractéristique (arrondi supérieur, calculée avant d'appliquer la difficulté), et parfois pas du tout quand la description l'indique (piloter un vaisseau à fusion, opérer un patient).
+* (Sp) Une compétence par spécialité : chaque spécialité est une compétence distincte, avec sa propre formation (par exemple Pilotage : navettes et atterrisseurs, ou Langues : russe). Pour une compétence (F) (Sp), la règle de formation s'applique à chaque spécialité séparément.
+* Sans marqueur : la compétence peut toujours être tentée à la valeur de la caractéristique (formation 0).
+Espace et vaisseaux
+* Pilotage (COO) (F) (Sp) : piloter un engin spatial ou atmosphérique. Spécialités : petits engins et remorqueurs (dont pousse-rochers) ; navettes et atterrisseurs ; aéronefs atmosphériques (Titan, Vénus, Mars) ; vaisseaux à fusion (impossible sans formation). Les véhicules de surface relèvent de Conduite.
+* Conduite (COO) : rovers, véhicules de surface, engins de chantier, véhicules terrestres et maritimes. Note : certains engins spatiaux pourront être conçus pour se piloter aussi facilement qu'une voiture ; ce détail sera traité plus tard avec les vaisseaux.
+* Mécanique orbitale (INT) (F) : calcul de trajectoires, fenêtres de lancement, rendez-vous, gestion du delta-v.
+* Manœuvre en apesanteur (ADA) : se déplacer, se battre et travailler sans gravité.
+* Sortie extravéhiculaire (ADA) : travail en combinaison dans le vide, réservoirs, filins, propulseurs dorsaux.
+* Opérations de bord (INT) : capteurs, communications, protocoles, gestion de quart.
+* Armement de bord (PER) (F) : utiliser les armes d'un vaisseau. Les règles détaillées figurent dans les Règles des vaisseaux (brouillon v0.1).
+Technique
+* Mécanique (INT) : machines, structures, pressurisation.
+* Électronique (INT) : circuits, capteurs, réparation de matériel, serrures et verrous électroniques.
+* Informatique (INT) : programmation, intrusion, gestion des greffiers (systèmes spécialisés).
+* Systèmes de survie (INT) : air, eau, recyclage, contrôle thermique.
+* Réacteurs et propulsion (INT) (F) (Sp) : fission, fusion, moteurs. Dangereux à rater. Spécialités : microréacteurs à fission ; nucléaire thermique ; fusion pulsée (fournaise) ; propulsion électrique à plasma.
+* Robotique et télépilotage (COO) : drones, bras robotiques, robots de chantier.
+* Explosifs (INT) (F) : charges minières, forage, démolition, déminage, sabotage.
+Sciences et médecine
+* Premiers secours (INT) : stabiliser, poser un garrot, traiter une décompression.
+* Médecine (INT) (F) (Sp) : soigner et traiter. Spécialités : diagnostic et médecine générale ; chirurgie (impossible sans formation) ; médecine de l'espace et des radiations (dont la torpeur médicale).
+* Sciences de la vie (INT) (F) (Sp) : spécialités : biologie ; écologie des habitats ; exobiologie.
+* Sciences physiques (INT) (F) (Sp) : spécialités : physique ; chimie ; planétologie ; astronomie.
+Combat
+* Armes de poing (COO) : pistolets, pistolets à fléchettes, électrochocs, outils détournés à une main.
+* Armes d'épaule (COO) : carabines, fusils, lanceurs, outils détournés à deux mains.
+* Corps-à-corps (FOR) : lutte, armes blanches, outils improvisés. En apesanteur, la lutte utilise la moyenne de FOR et ADA (section 7).
+* Esquive (RÉF) : se jeter à couvert, éviter un coup ou un débris.
+Corps et terrain
+* Athlétisme (FOR) : courir, grimper, sauter, nager.
+* Discrétion (COO) : se cacher, se déplacer sans bruit, passer inaperçu.
+* Vigilance (PER) : remarquer, surveiller, ne pas être surpris.
+* Fouille (PER) : chercher méthodiquement un objet, une fuite, une preuve.
+* Survie (INT) : environnements planétaires extrêmes (Titan, surface martienne, glaces). Un futur Atout permettra d'utiliser CON à la place d'INT, au choix du joueur.
+Relations
+* Persuasion (PRÉ) : convaincre, inspirer, séduire.
+* Négociation (PRÉ) : marchander, conclure un contrat, arbitrer.
+* Tromperie (PRÉ) : mentir, bluffer, se déguiser, se faire passer pour un autre.
+* Intimidation (VOL) : faire pression, menacer, imposer.
+* Commandement (PRÉ) : diriger une équipe en situation de crise.
+* Psychologie (PER) : comprendre les émotions et intentions d'autrui.
+* Enquête (INT) : interroger, recouper témoignages, archives et données, remonter un réseau ou une piste.
+Savoirs
+* Bureaucratie et droit (INT) : traités, règlements de la Veille, contrats de la Mutuelle, chartes des colonies.
+* Commerce (INT) : marchés, cours de l'eau et de l'hélium 3, changes entre les monnaies, logistique.
+* Culture (INT) : une seule compétence, avec un champ libre pour la spécificité du personnage (origine, bloc, communauté, milieu…), sans liste fermée.
+* Langues (INT) (Sp) : une compétence par langue (anglais technique, russe, mandarin, espagnol…) ; le parler de quart compte comme une langue.
+5. Les modificateurs de difficulté
+Le meneur choisit une difficulté, puis ajoute éventuellement des modificateurs de situation ; il dispose en plus d'un modificateur libre. Le total (difficulté, modificateurs de situation et modificateur libre) est limité à plus ou moins 50.
+
+
+
+
+Difficulté
+	Modificateur
+	Exemple
+	Très facile
+	+30
+	Changer un joint standard avec le bon kit, à bord, sans urgence.
+	Facile
+	+20
+	Piloter une navette en approche guidée par le port.
+	Aisée
+	+10
+	Localiser une fuite déjà signalée par les capteurs.
+	Normale
+	0
+	Réparer un recycleur d'air en panne.
+	Délicate
+	-10
+	Amarrer un remorqueur à un astéroïde en rotation lente.
+	Difficile
+	-20
+	Soigner une blessure grave en apesanteur, dans une coursive étroite.
+	Très difficile
+	-30
+	Recalculer une trajectoire de secours sans ordinateur de bord.
+	Extrême
+	-40
+	Réparer la tuyère d'une fournaise pendant une éruption solaire.
+	
+
+Modificateurs de situation courants
+* Gravité inhabituelle : -10 si l'on est hors de sa gravité natale pour une tâche physique ; -20 si l'écart est important (un natif de Cérès sur Mars, un Terrien en apesanteur sans entraînement).
+* Combinaison pressurisée : -10 aux tâches de manipulation fine et de perception ; -20 avec une combinaison lourde ou blindée.
+* Outils : +10 avec de bons outils, -20 sans outils adaptés.
+* Temps : +10 si l'on prend le double du temps ; -10 si l'on agit dans la précipitation.
+* Aide : +10 par assistant compétent, jusqu'à +30.
+* Fatigue, hypoxie, blessures : de -10 à -30 selon l'état (voir les conditions).
+* Délai de communication : -10 à -20 à toute action qui dépend d'un conseil ou d'un contrôle à distance au-delà de quelques secondes de délai.
+6. Tests opposés et tests prolongés
+Tests opposés
+Quand deux personnages s'opposent (négociation, poursuite, lutte, discrétion contre vigilance), chacun fait un test. On compare les résultats :
+
+
+* Si un seul réussit, il l'emporte.
+* Si les deux réussissent, celui qui a le plus de DR l'emporte ; à égalité, le score le plus élevé gagne ; si les scores sont égaux, la situation reste bloquée.
+* Si les deux échouent, personne ne progresse, ou le statu quo profite au défenseur.
+* Marge de victoire : la différence de DR entre les deux camps indique l'ampleur de la victoire et peut être utilisée par la règle concernée (dégâts, avance dans une poursuite).
+Tests prolongés
+Pour les tâches longues (réparer un réacteur, calculer une trajectoire d'interception, pirater un réseau, soigner une irradiation), le meneur fixe un objectif de DR et un intervalle de temps par test.
+
+
+* Chaque réussite apporte 1 + ses DR à la réserve de progression.
+* Chaque échec fait perdre un intervalle de temps ; un échec à 3 DE ou plus, ou un échec critique, provoque une complication (pièce détruite, alerte, aggravation).
+* Exemples d'objectifs : colmater une brèche de coque (4 DR, 1 minute par test), réparer un recycleur (8 DR, 30 minutes), recalibrer un moteur à fusion (15 DR, 2 heures), recalculer une trajectoire vers Cérès (10 DR, 1 heure).
+* Tests prolongés sous pression : ils fonctionnent très bien avec une horloge (réserve d'air, éruption solaire, vaisseau ennemi qui approche).
+7. Le combat
+Le combat est rare, rapide et décisif. Il doit faire peur. Il n'existe aucune ressource narrative (ni points de destin, ni relance pour éviter la mort) : on incarne un humain parmi d'autres, dont la vie ne vaut pas plus que celle des PNJ.
+Le tour et l'initiative
+* Un tour représente environ 5 secondes.
+* Initiative glissante : au premier tour, chaque personnage fait un test de Vigilance ; on agit dans l'ordre décroissant des DR obtenus (à DR égal, une réussite critique passe devant une réussite normale), et une égalité est départagée par la RÉF la plus élevée, puis, en cas d'égalité parfaite (même DR, même RÉF), par le score de Vigilance le plus élevé ; ceux qui ratent leur test jouent après ceux qui l'ont réussi, du moins de DE au plus de DE (égalité départagée de même par la RÉF, puis par la Vigilance). Cet ordre est conservé aux tours suivants, sauf dans trois cas : un personnage qui subit une blessure grave ou pire, ou qui devient Sonné, passe en fin d'ordre au tour suivant (si plusieurs personnages y sont renvoyés au même tour, ils gardent entre eux leur ordre précédent ; retirer la condition Sonné n'annule pas un renvoi en fin d'ordre déjà marqué) ; un personnage interrompu (plaqué, désarmé, pris dans une décompression…), qu'il ait déjà agi ou soit en train d'agir, recule d'une place à partir du tour suivant ; un personnage peut, pendant son propre tour uniquement, sacrifier son mouvement (et non son action) pour refaire un test de Vigilance et se replacer. L'avantage consiste seulement à jouer avant : il ne donne aucun bonus, cumulatif ou non. Les véhicules et vaisseaux n'ont pas d'initiative propre : c'est le pilote ou l'équipage qui agit. Le combat entre vaisseaux suit les Règles des vaisseaux (brouillon v0.1).
+* Surprise : le meneur indique qui est surpris ; les personnages surpris n'agissent pas au premier tour.
+Les actions
+À son tour, un personnage dispose d'une action, d'un mouvement et peut faire une réaction par tour (esquiver, parer, se mettre à couvert).
+
+
+* Attaquer : un test de compétence d'arme, modifié par la portée, le couvert et la visée. Une arme utilise la compétence du même nom ; si l'arme n'a pas de compétence, ou si le personnage ne la connaît pas, on lance la COO pour le tir et la FOR pour le corps-à-corps.
+* Viser : +10 par action de visée, jusqu'à +30. Ce bonus se cumule avec le malus du tir visé (par exemple, viser la tête pendant deux actions : −30 + 20 = −10).
+* Tir en rafale : +10 au jet, mais consomme beaucoup de munitions et augmente le recul (voir apesanteur).
+* Recharger, utiliser un objet, soigner, réparer : une action.
+* Se mettre à couvert : un mouvement ; le couvert impose -10 à -30 aux attaquants.
+* S'ancrer : un mouvement ; nécessaire pour tirer correctement en apesanteur.
+Localisation des coups
+Sans tir visé, quand une attaque touche, on inverse les chiffres du dé pour déterminer la zone atteinte (un jet de 37 devient 73 ; 10 devient 01, la tête ; 00 compte pour 100, la jambe gauche). Tir visé : l'attaquant choisit la zone et subit un malus pour toucher : torse −10, bras ou jambe −20, tête −30, visière −40. Ces malus supposent un tireur qui n'a que ses yeux et un réticule simple ; les assistants de visée automatiques viendront plus tard.
+
+
+
+
+Zone
+	Effet particulier
+	Jet inversé
+	Tête
+	Visière ou casque fissuré : brèche si les dégâts bruts dépassent le seuil de brèche (divisé par deux sur un coup à la visière). Une blessure critique entraîne l'inconscience.
+	01 à 10
+	Bras droit
+	Blessure grave : l'objet tenu est lâché (en apesanteur, il dérive).
+	11 à 25
+	Bras gauche
+	Blessure grave : l'objet tenu est lâché (en apesanteur, il dérive).
+	26 à 40
+	Torse
+	Organes vitaux. Sur une réussite critique de l'attaquant, la réserve d'air dorsale est touchée.
+	41 à 70
+	Jambe droite
+	Blessure grave : mouvement divisé par deux ; en apesanteur, impossible de s'élancer correctement.
+	71 à 85
+	Jambe gauche
+	Comme la jambe droite.
+	86 à 100
+	
+
+Dégâts, armure et blessures
+* Principe directeur : le réalisme ne doit pas alourdir le jeu. Il n'y a pas de points de vie : les dégâts (valeur fixe de l'arme + DR − armure de la zone) sont comparés au Seuil de blessure, chaque blessure est un objet sur la feuille, et la santé se suit par états (conditions).
+* Dégâts : chaque arme a une valeur de dégâts fixe (par exemple 6 pour un pistolet frangible, 10 pour une carabine). On ajoute les DR de l'attaque. La létalité est conservée telle quelle, mais les valeurs des armes restent à définir : ces exemples sont provisoires.
+* Armure : chaque protection a une valeur par zone (torse / tête / bras / jambes : combinaison souple 1 / 1 / 1 / 1, combinaison renforcée 3 / 3 / 2 / 2, armure de pont 6 / 5 / 4 / 4). On la soustrait aux dégâts. Un coup à la visière (tir visé, voir Localisation des coups) divise par deux la protection totale de la tête, toutes couches portées additionnées (combinaison souple 1 + renforcée 3 = 4 à la tête, donc 2 contre un coup à la visière), arrondie au supérieur. Les seuils de brèche, eux, ne s'additionnent pas : sur un coup à la visière, le seuil de brèche de la tête de chaque couche portée est divisé par deux, arrondi au supérieur, et la brèche se vérifie couche par couche contre les dégâts bruts (combinaison souple + armure de pont : 4 devient 2 et 12 devient 6). Comme partout (section 2), on arrondit au supérieur : la moitié de 5 vaut 3. Si les dégâts restants sont nuls ou négatifs, il n'y a pas de blessure : la cible est simplement secouée, sans effet mécanique ; mais si les dégâts bruts dépassent le seuil de brèche, la brèche s'ouvre quand même.
+* Gravité de la blessure : on compare les dégâts restants au Seuil de blessure (SB) du personnage. Les machines (Créatures, Synthétiques, Drones) reçoivent une FOR et une CON propres à chaque modèle, fixées au cas par cas ; des blessures propres aux machines existeront (liste à venir) ; en attendant, on utilise la Blessure standard.
+* Inférieurs au SB : blessure légère (-10 aux actions utilisant la zone, jusqu'aux soins).
+* De SB à 2 SB − 1 : blessure grave (-20, saignement : perte d'1 point d'Endurance par tour jusqu'aux premiers secours, test de VOL pour continuer à agir).
+* De 2 SB à 3 SB − 1 : blessure critique (zone hors d'usage, test de CON pour rester conscient ; à la tête ou au torse, risque de mort sans soins en quelques minutes).
+* À partir de 3 SB : blessure mortelle (mort immédiate ou en quelques tours, selon la zone).
+* Brèche de combinaison : chaque armure a un seuil de brèche (combinaison souple 4, combinaison renforcée 8, armure de pont 12) ; des dégâts bruts (avant armure) supérieurs à ce seuil la perforent, même sans blessure. Il n'y a pas d'usure. Seules les armures pressurisées (combinaison souple, combinaison renforcée, armure de pont) peuvent être perforées en ce sens : une armure non pressurisée n'a pas de joints étanches, et percer ses joints ne déclenche aucun compte à rebours. Une perforation laisse 5 minutes de survie (compte à rebours) : à zéro, le personnage perd connaissance, puis meurt 2 minutes plus tard si la brèche n'est pas colmatée ; à la fin du compte à rebours, la mort par perforation s'applique automatiquement, avec un message au meneur, qui peut l'annuler. Le compte à rebours continue même si l'armure percée est retirée ou déséquipée ; le meneur peut l'arrêter (par exemple dans une zone pressurisée). Elle se gère avec les règles de décompression (section 8). Rustine : Équipement consommable, posée en une action ; aucun test au calme, un test simple sous le feu (Survie par défaut, difficulté Normale ; le meneur peut changer la compétence et la difficulté). Un test raté ne consomme pas la rustine : on peut réessayer à une action suivante. D'autres compétences et objets de colmatage (mousses expansives, etc.) seront définis plus tard.
+
+
+Exemple : une carabine (10) touche le torse d'un mineur avec 2 DR : 12 dégâts. Sa combinaison renforcée en absorbe 3 : 9 dégâts. Avec FOR 30 et CON 40, son SB est de 4 (70 / 20 = 3,5, arrondi à 4) : 9 dégâts tombent entre 8 et 11, blessure critique ; les 12 dégâts bruts dépassent le seuil de brèche de la combinaison renforcée (8) : une brèche s'ouvre.
+Armes réalistes
+* Munitions frangibles : se fragmentent au contact d'une paroi ; dégâts réduits contre une armure lourde, mais pas de perforation de coque. C'est la norme à bord.
+* Munitions perforantes : traversent les armures et les cloisons. Interdites dans la plupart des habitats ; une balle perdue peut tuer quelqu'un de l'autre côté de la paroi.
+* Pistolets à fléchettes : silencieux, faible recul, efficaces sur les cibles non protégées.
+* Électrochocs : neutralisation sans tuer. Dangereux près de l'oxygène pur.
+* Outils détournés : chalumeaux plasma, pistolets à rivets, découpeurs laser : dégâts élevés, portée courte.
+Combat en basse gravité et en apesanteur
+* Recul : en apesanteur, un personnage non ancré qui tire avec une arme de recul notable doit réussir un test de Manœuvre en apesanteur, sinon il part en rotation (une action pour se stabiliser). En rafale, le test est à -20.
+* Mouvement : en apesanteur, on se déplace en s'élançant d'un point d'appui ; on avance en ligne droite et on ne peut plus changer de direction avant le prochain appui, sauf avec un propulseur dorsal. Un personnage en vol est une cible prévisible (+10 pour le toucher).
+* Couvert en trois dimensions : les menaces peuvent venir d'en haut, d'en bas, de partout. Le meneur doit en tenir compte.
+* Basse gravité (Lune, Cérès, Mars) : on court mal, on bondit loin, on tombe lentement. Un personnage qui n'est pas né dans cette gravité subit le modificateur de gravité inhabituelle.
+* Lutte : en apesanteur, la lutte est dominée par l'Adaptation spatiale plutôt que la Force : utiliser la moyenne de FOR et ADA.
+
+
+Le combat entre vaisseaux est traité dans un document séparé : Règles des vaisseaux (brouillon v0.1), https://docs.google.com/document/d/16PTZrGKJhbRnlIEKAu6O4498tQvQEOzNkMIzB6Bl8Lo/edit (combat par postes d'équipage, décision du 21 octobre 2026 ; voir aussi la section 14).[b]
+8. Les dangers de l'environnement
+Le vide
+* Conscience utile : sans protection, un personnage reste conscient environ 10 à 15 secondes (2 à 3 tours) ; il peut agir s'il réussit un test de VOL à chaque tour.
+* Ne pas retenir son souffle : un personnage qui retient sa respiration lors d'une exposition subit une blessure grave au torse (lésion pulmonaire). Un test de Sortie extravéhiculaire ou de Premiers secours permet de savoir qu'il faut expirer.
+* Au-delà : inconscience, puis un test de CON par tour à -10 cumulatif ; chaque échec inflige une blessure grave générale. Au-delà de 90 secondes environ, la mort est probable sans recompression immédiate.
+* Pas d'explosion : le corps gonfle, les liquides de surface entrent en ébullition, mais le corps ne « éclate » pas.
+Décompression
+* Fuite lente : petite brèche ; la pression baisse en quelques minutes à quelques heures. L'horloge est longue, mais l'hypoxie s'installe sans qu'on le sente (test de PER pour s'en rendre compte).
+* Décompression rapide : brèche importante ; l'air s'échappe en quelques secondes, avec un souffle violent qui projette objets et personnes (test de FOR ou de Manœuvre en apesanteur pour s'accrocher).
+* Colmater : une rustine sur une combinaison est une action (aucun test au calme ; sous le feu, test simple de Survie, difficulté Normale par défaut, compétence et difficulté modifiables par le meneur ; un échec ne consomme pas la rustine ; voir section 7) ; colmater une coque est un test prolongé.
+* Hypoxie : -10 au premier stade, -20 au deuxième, inconscience au troisième. Chaque stade dure quelques tours à quelques minutes selon la pression.
+* Accident de décompression : passer trop vite d'une pression d'habitat à une combinaison basse pression sans pré-respiration d'oxygène peut provoquer des douleurs articulaires et des malaises (test de CON).
+Les radiations
+Les règles fonctionnent par paliers : Sain, Exposé, Irradié, Condamné. Les doses en millisieverts (mSv) restent tenues en coulisse par FoundryVTT, dans un compteur de dose aiguë (l'exposition récente) et un compteur de dose cumulée (sur toute la vie) ; la fiche les affiche comme une barre colorée (vert, puis rouge, puis noir), purement visuelle tant que le seuil du palier suivant n'est pas franchi. Sous 250 mSv de dose aiguë, le personnage est Sain : aucun effet. Le jeu proposera des moyens de réduire la dose et des traitements médicamenteux pour endiguer certains effets. ⚠ QUESTION OUVERTE : détail à définir plus tard.
+
+
+* Sources : rayonnement cosmique (environ 1 mSv par jour en espace profond sans blindage, beaucoup moins dans un abri), éruptions solaires (de dizaines à des milliers de mSv en quelques heures sans abri), ceintures de Jupiter (Europe : plusieurs milliers de mSv par jour), réacteurs endommagés.
+* Exposé (dose aiguë de 250 à 999 mSv) : nausées, fatigue (-10 pendant quelques jours).
+* Irradié (1 000 à 2 999 mSv) : syndrome d'irradiation (-20, test de CON pour éviter des complications, soins nécessaires).
+* Condamné (3 000 mSv et plus) : irradiation grave, mort probable en quelques semaines sans soins avancés.
+* Au-delà de 6 000 mSv (toujours Condamné) : mort quasi certaine.
+* Dose cumulée : à chaque tranche de 1 000 mSv cumulés, le joueur tire sur une table de séquelles (cataracte, risque de cancer, stérilité, troubles cognitifs). Cela donne au corps une mémoire, et aux vieux spatiaux des histoires.
+* Éruptions solaires : elles sont prévisibles de quelques minutes à quelques heures. Rejoindre l'abri antiradiations (souvent le cœur du vaisseau, entouré d'eau) est un excellent moteur de tension.
+Accélérations et g
+* Jusqu'à la Tolérance aux g (TG) : aucun effet notable en dehors de l'inconfort.
+* Au-delà, par tranche de 1 g supplémentaire : -10 à toutes les actions et un test de CON par minute ; un échec fait perdre des points d'Endurance.
+* Au-delà de 6 g : couchette anti-g obligatoire ; risque de perte de conscience (test de CON par tour) et de blessure interne en cas d'échec critique.
+* Origine : les natifs de basse gravité ont une TG réduite ; les natifs de la Terre ont une TG augmentée (voir les origines).
+Gravité de longue durée
+* Déconditionnement : chaque mois passé en gravité inférieure à sa gravité natale sans exercice ni médicaments impose un test de CON ; chaque échec réduit FOR ou CON d'1 point (récupérable lentement).
+* Le voyage vers une gravité plus forte demande des semaines d'entraînement préalable.
+Froid, chaleur et atmosphères hostiles
+* Titan : -180 °C ; sans tenue chauffante, blessure grave en quelques minutes. Pas besoin de pressurisation, mais un masque est indispensable.
+* Mars : quasi-vide (environ 0,6 % de la pression terrestre) : combinaison obligatoire, poussière corrosive, tempêtes.
+* Surchauffe : un vaisseau qui ne peut plus évacuer sa chaleur devient un four ; tests de CON par heure. Cette surchauffe est celle que subit un personnage, notamment dans une armure portée (l'armure de pont, section 12) ; elle est distincte de la jauge de chaleur du réacteur d'un vaisseau (Règles des vaisseaux).
+9. Création de personnage
+La création se fait en sept étapes. Elle doit prendre environ 30 minutes avec FoundryVTT.
+Étape 1 : le concept
+Une phrase qui décrit le personnage : « Pilote de remorqueur née sur Cérès, endettée envers la Mutuelle ».
+Étape 2 : l'origine (lieu de naissance)
+L'origine fixe la gravité natale, des modificateurs de caractéristiques, une compétence culturelle et une particularité.
+
+
+
+
+Origine
+	Modificateurs de caractéristiques
+	Gravité natale et particularité
+	Terre
+	FOR +5, CON +10, ADA -10
+	1 g, TG +1. Supporte toutes les gravités du système, mais souffre du mal de l'espace les premiers jours en apesanteur.
+	Lune ou orbite terrestre
+	COO +5, ADA +5, CON -5
+	0,17 g, TG 0. Peut vivre sur Terre après entraînement. Culture (Terre) offerte.
+	Mars
+	CON +5, VOL +5, FOR -5
+	0,38 g, TG -1. Ne visite la Terre qu'avec aide médicale. Sens de la rareté : +10 en Systèmes de survie pour économiser l'eau et l'air.
+	Ceinture (Cérès, Vesta, petits habitats)
+	ADA +15, FOR -5, CON -5
+	0,03 à 0,5 g, TG -2. Ignore la première pénalité de recul en apesanteur. Ne supporte pas durablement plus de 0,5 g.
+	Habitat tournant (station)
+	ADA +10, PER +5, FOR -5, CON -5
+	0,3 à 0,7 g selon l'habitat, TG -1. Réflexes de sécurité : +10 pour détecter une fuite ou une anomalie de pression.
+	Systèmes extérieurs (Callisto, Titan)
+	VOL +10, CON -5
+	0,13 à 0,14 g, TG -1. Habitué à l'isolement : +10 pour résister au stress de la solitude. Dose cumulée de départ plus élevée.
+	
+
+Étape 3 : les caractéristiques
+* Méthode proposée (répartition) : chaque caractéristique commence à 25. Le joueur répartit 130 points, sans dépasser 60 avant modificateurs d'origine.
+* Méthode alternative (tirage) : 2D10 + 20 pour chaque caractéristique, puis on échange deux valeurs au choix.
+Étape 4 : le milieu (parcours de jeunesse)
+Le milieu donne 3 compétences à +10 et un lien (une personne, une dette, une loyauté). Exemples :
+
+
+* Famille de sociétaires : Sortie extravéhiculaire, Négociation, Mécanique. Lien : une part de risque familiale.
+* Enfant de la Veille : Opérations de bord, Bureaucratie et droit, Vigilance. Lien : un parent officier.
+* Réfugié climatique : Survie, Tromperie, Athlétisme. Lien : une communauté restée sur Terre.
+* Élite académique : Sciences (au choix), Langues, Persuasion. Lien : un mentor de Valhalla.
+* Ouvrier sous contrat : Mécanique, Systèmes de survie, Corps-à-corps. Lien : un contrat pas encore remboursé.
+* Communauté des Partants : Sciences de la vie, Psychologie, Systèmes de survie. Lien : un vœu prononcé.
+Étape 5 : la profession
+La profession donne 8 compétences de métier, à répartir : 3 à +20, 5 à +10, un équipement de départ et un réseau. Exemples :
+
+
+* Pilote : Pilotage, Mécanique orbitale, Manœuvre en apesanteur, Opérations de bord, Vigilance, Armement de bord, Mécanique, Commandement.
+* Ingénieur : Mécanique, Électronique, Réacteurs et propulsion, Systèmes de survie, Sortie extravéhiculaire, Informatique, Robotique et télépilotage, Fouille.
+* Médecin : Médecine, Premiers secours, Sciences de la vie, Psychologie, Persuasion, Systèmes de survie, Informatique, Vigilance.
+* Prospecteur : Sciences physiques, Sortie extravéhiculaire, Pilotage, Commerce, Robotique et télépilotage, Mécanique, Survie, Négociation.
+* Inspecteur de la Veille : Bureaucratie et droit, Psychologie, Fouille, Armes de poing, Opérations de bord, Intimidation, Mécanique orbitale, Vigilance.
+* Plénipotentiaire : Négociation, Persuasion, Bureaucratie et droit, Psychologie, Culture, Langues, Commandement, Tromperie.
+* Garde ou soldat : Armes d'épaule, Armes de poing, Corps-à-corps, Esquive, Manœuvre en apesanteur, Vigilance, Premiers secours, Commandement.
+* Contrebandier : Pilotage, Tromperie, Commerce, Discrétion, Mécanique orbitale, Informatique, Négociation, Armes de poing.
+Étape 6 : finitions
+* Répartir 40 points de formation libres (maximum +10 par compétence).
+* Calculer les valeurs dérivées.
+* Choisir une motivation (pourquoi on part dans l'espace) et une complication (ce qui pourrait tout faire basculer).
+* Noter la dose cumulée de départ : 50 à 500 mSv selon l'âge et le parcours.
+Étape 7 : l'équipage
+Les joueurs définissent ensemble leur vaisseau ou leur base, leur commanditaire et une dette ou un secret commun. Le vaisseau est une feuille à part entière.
+10. Progression
+* Points d'expérience (XP) : 3 à 5 par séance, plus 1 à 3 pour un objectif majeur atteint.
+* Améliorer une compétence : +5 coûte 5 XP jusqu'à +20 de formation, 10 XP jusqu'à +40, 15 XP au-delà.
+* Améliorer une caractéristique : +1 coûte 5 XP (maximum +10 au total sur la carrière, sauf traitement médical exceptionnel).
+* Atouts : des capacités spéciales (par exemple « Pied marin du vide » : ignore la première pénalité de recul en apesanteur ; « Œil de navigateur » : +1 DR en Mécanique orbitale) coûtent 15 XP.
+* Coût du corps : la dose cumulée, les séquelles et le déconditionnement sont aussi une forme de progression : le personnage devient plus compétent mais plus usé.
+
+
+⚠ CHOIX OUVERT : progression par XP (proposée) ou progression par l'usage (on coche les compétences utilisées et on teste leur amélioration en fin de séance). Voir la section 14.
+11. Les conditions (états)
+Les conditions sont des états temporaires appliqués au personnage. Elles doivent être faciles à afficher dans FoundryVTT.
+
+
+* Ancré / Flottant / En vol : position en apesanteur.
+* Hypoxie (1 à 3) : -10 par stade, inconscience au stade 3.
+* Exposé, Irradié, Condamné : paliers de radiation selon la dose aiguë (voir section 8) ; un personnage Sain n'a aucune condition.
+* Saignement : perte d'Endurance par tour.
+* Sonné : pas d'action ce tour, réaction possible.
+* Inconscient : aucune action.
+* Sous accélération (X g) : pénalité selon la TG.
+* Combinaison percée : horloge de décompression active.
+* Épuisé : -20 ; Endurance à 0 et test de CON réussi pour rester conscient (voir section 3). Le -20 s'applique automatiquement aux jets ; le meneur peut retirer l'état.
+* Choqué : Sang-froid à 0, -20 aux actions sociales et techniques.
+12. Équipement : principes
+* Chaque objet a une masse, un encombrement et une réserve (air, énergie, munitions) quand c'est pertinent.
+* La combinaison est l'objet le plus important : réserve d'air (en heures), protection par zone, état des joints, dosimètre, radio. L'armure de pont est pressurisée, mais son autonomie est courte (30 à 60 minutes) et elle risque la surchauffe.
+* Le vaisseau a aussi une feuille : delta-v restant, masse de réaction, réserves d'air, d'eau et de vivres, points d'Intégrité par section, par plaque de blindage et par module, jauge de chaleur du réacteur, pièces de rechange (l'abri antiradiations deviendra plus tard un module). Détails : Règles des vaisseaux (brouillon v0.1).
+13. Résumé pour la table
+* Lance 1D100, fais moins que ton score.
+* Les DR se lisent sur le chiffre des dizaines.
+* 01 à 05 : réussite critique ; 96 à 100 : échec critique ; entre les deux, un double est un critique : bon s'il est sous ton score, mauvais sinon.
+* En combat : touche, inverse le dé pour la zone, dégâts + DR - armure, compare au SB.
+* Dans le vide : 2 à 3 tours de conscience utile, puis tout va très vite.
+14. Choix de conception (ouverts ou tranchés)
+Tranchés le 18 octobre 2026 et retirés de cette liste : degrés par dizaines (section 2) ; critiques par plages fixes et doubles (section 2) ; initiative glissante (section 7) ; blessures sans points de vie, comparées au Seuil de blessure (section 7) ; radiations par paliers Sain, Exposé, Irradié, Condamné (sections 8 et 11) ; aucune ressource narrative (section 7). Tranché le 21 octobre 2026 : le combat entre vaisseaux (ci-dessous).
+Caractéristiques
+* Option A (proposée) : neuf caractéristiques sur 100, utilisées directement en test.
+* Option B : caractéristiques sur 20 (style classique), multipliées par 5 pour les tests directs.
+Création des caractéristiques
+* Option A (proposée) : répartition de points, pour équilibrer le groupe.
+* Option B : tirage aux dés, pour le hasard et la surprise.
+Progression
+* Option A (proposée) : points d'expérience dépensés librement.
+* Option B : progression par l'usage : on coche les compétences utilisées et on tente de les améliorer en fin de séance.
+Combat entre vaisseaux
+* Tranché le 21 octobre 2026 : combat abstrait par postes, sans carte vectorielle. Sept postes (commandant, pilote, navigateur, ingénieur, opérateur, artilleur, médecin), chacun lançant sa compétence ; trois portées abstraites (proche, moyenne, lointaine) ; points d'Intégrité par section, par plaque de blindage et par module ; jauge de chaleur de 0 à 10 propre au réacteur. Détails : Règles des vaisseaux (brouillon v0.1).
+* Écarté : le combat tactique sur carte vectorielle (trajectoires, vitesses et portées réalistes).
+15. Notes pour l'implémentation FoundryVTT
+Cette section s'adresse au développeur qui implémentera le système. Elle liste les modèles de données (DataModels) que les règles impliquent. Les noms techniques sont proposés en anglais pour le code, avec leur équivalent français dans l'interface.
+Types d'acteurs (Actor)
+* character (Personnage) : characteristics (for, con, coo, ref, ada, per, int, vol, pre : valeur de base, modificateur d'origine, total) ; derived (seuilBlessure, toleranceG, sangFroid {value, max}) ; l'Endurance est stockée comme un simple nombre (system.endurance), et son maximum (CON / 5, arrondi au supérieur) est calculé ; elle commence pleine ; radiation {aigue, cumulee} en mSv, tenus en coulisse, et palier dérivé (sain, expose, irradie, condamne) affiché sur la fiche comme une barre colorée vert → rouge → noir ; gravityNative (en g) ; origin, background, profession (références vers les items) ; xp {total, depense} ; motivation, complication ; biographie (HTML). Les caractéristiques sont des données de l'acteur, pas des items ; à terme, un clic sur une caractéristique ouvre une fenêtre de choix de difficulté, puis lance le jet.
+* npc (PNJ) : version allégée : quelques caractéristiques, une liste courte de compétences avec score direct, SB, armure par zone, notes de comportement.
+* creature (Créature) : FOR, CON, PER et SB ; autres champs à définir.
+* synthetic (Synthétique) : robot ou IA au sens commun (pas forcément sentient), allié ou ennemi, avec compétences ; FOR, CON, PER et SB.
+* drone (Drone) : machine simple pilotée à distance ou automatisée, à l'intelligence très limitée ; FOR, CON, PER et SB.
+* vehicle (Véhicule) : catégorie (terrestre, maritime, aérien).
+* ship (Vaisseau) : une seule feuille pour tous les vaisseaux et stations (les anciens types séparés ship et habitat sont fusionnés ici) ; type (liste « Type de vaisseau » tirée du Guide des vaisseaux) ; catégorie (atmosphérique, vaisseau du vide, objet fixe ; « objet fixe » remplace l'ancienne catégorie station) ; masse, deltaV {value, max}, masseReaction, propulsion (type, accélération en milli-g), réserves {air, eau, nourriture} en jours ; sections (proue, flanc bâbord, flanc tribord, poupe, radiateurs), chacune avec integrite {value, max} et blindage {value, max} ; chaleur du réacteur (0 à 10) ; pièces de rechange (points) ; postes d'équipage (commandant, pilote, navigateur, ingénieur, opérateur, artilleur, médecin : références d'acteurs). Plus tard (non codés pour l'instant) : position et cap ; l'abri antiradiations deviendra un module. Détails : Règles des vaisseaux (brouillon v0.1).
+* ship, catégorie objet fixe (ancien type habitat) : plus tard (non codés pour l'instant) : population, gravité (rotation ou naturelle), faction, ressources, menaces.
+Types d'objets (Item)
+* skill (Compétence) : characteristic (clé), training (0 à 60), trainingRequired (booléen, marqueur F), untrainedAllowed (booléen, faux si impossible sans formation), perSpecialty (booléen, marqueur Sp), specialty (texte : la spécialité, ou la spécificité libre de Culture), domain (espace, technique, sciences, combat, corps, relations, savoirs).
+* weapon (Arme, armes portatives uniquement) : skill (référence), damage, range (courte, moyenne, longue), recoil (pour l'apesanteur), ammo {value, max}, ammoType (frangible, perforante, fléchette), burst (booléen), hullSafe (booléen).
+* armor (Armure/Vêtement) : protection par zone (head, torso, rightArm, leftArm, rightLeg, leftLeg), pressurized (booléen), airReserve (heures ; pour l'armure de pont, 0,5 h, réserve pleine au départ), breachThreshold (seuil de brèche), sealState (intact, percée), penalty (manipulation, perception).
+* gear (Équipement) : masse, encombrement, quantité, réserve (énergie, air), description.
+* augmentation (Augmentation) : cybernétique et génétique fusionnées ; genre (thérapie, prothèse, organe cultivé, héréditaire…).
+* substance (Substance) : médicaments, drogues (les drogues ne sont pas des augmentations).
+* injury (Blessure) : location, severity (légère, grave, critique, mortelle), bleeding (booléen), penalty, treated (booléen), healingTime.
+* origin (Origine) : gravityNative, characteristicModifiers, gToleranceModifier, skillBonuses, traits (texte).
+* background (Milieu) : skillBonuses (3), link (texte).
+* profession (Profession) : careerSkills (8), startingGear, network.
+* talent (Atout) : coût XP, prérequis, effet (texte et ActiveEffect associé).
+* sequel (Séquelle) : type (radiation, déconditionnement, trauma), effet, permanent (booléen).
+* software (Logiciel) : champs à définir.
+* shipModule (Module de vaisseau) : un seul type pour tout ce qu'on installe, armes comprises ; catégorie (arme, propulsion, réacteur, radiateurs, capteurs, communications, support vital, cabines, soute, blindage, autre) ; section où il est installé ; integrite {value, max} ; état calculé à partir de l'Intégrité (plus de la moitié : intact ; moitié ou moins : dégradé, -20 ; 0 : hors service) ; effets ; masse ; pour une arme : dégâts, portée (proche, moyenne, lointaine), munitions. Détails : Règles des vaisseaux (brouillon v0.1). Les armes de vaisseau sont des modules, pas des items Arme.
+* Ne sont pas des types : les caractéristiques (données de l'acteur) ; les conditions (statuts / icônes de pion) ; les factions, organisations et le descriptif du monde (Journaux Foundry, en compendiums) ; les contacts (lignes libres sur la fiche).
+Logique de jeu à coder
+* Jet D100 : fonction centrale qui prend un score et des modificateurs (difficulté, situation et modificateur libre du meneur, plafonnés ensemble à plus ou moins 50 ; une compétence (F) sans formation part de la moitié de la caractéristique, arrondi supérieur, avant modificateurs), renvoie réussite ou échec, DR ou DE (dizaine = partie entière de n / 10, 00 = 100 ; jamais sous 0), réussite critique ou échec critique (01 à 05 toujours réussite critique, 96 à 100 toujours échec critique, prioritaires sur les doubles ; entre 06 et 95, double inférieur ou égal au score modifié = réussite critique, au-dessus = échec critique), et produit une carte de discussion (chat card) lisible.
+* Test opposé : carte de discussion qui attend le jet de l'adversaire et compare les DR.
+* Test prolongé : suivi d'une réserve de DR, d'un objectif et d'un compteur d'intervalles, éventuellement sous forme de « tracker » affiché.
+* Initiative glissante : test de Vigilance au premier tour, ordre par DR (à DR égal, réussite critique avant réussite normale ; égalité : RÉF, puis score de Vigilance), puis les échecs du moins de DE au plus de DE (égalité : RÉF, puis Vigilance) ; surpris marqués par le meneur et exclus du premier tour ; ordre conservé ensuite dans le suivi de combat ; déplacements automatiques en fin d'ordre au tour suivant sur blessure grave ou pire ou condition Sonné (ordre relatif conservé entre personnages renvoyés au même tour ; retirer Sonné n'annule pas un renvoi déjà marqué), recul d'une place au tour suivant sur interruption, même si le personnage a déjà agi ou agit (à signaler par le meneur), et bouton « se replacer », utilisable seulement pendant son propre tour, qui consomme le mouvement et relance la Vigilance. Aucun bonus lié à l'ordre. Véhicules et vaisseaux absents du suivi d'initiative (le pilote ou l'équipage agit).
+* Attaque : jet de la compétence du même nom que l'arme (à défaut, COO pour le tir, FOR pour le corps-à-corps), inversion des chiffres pour la localisation (10 → 01, 00 → 100), calcul dégâts + DR - armure, comparaison au SB, création automatique d'un item injury et éventuellement d'une condition « Combinaison percée », avec compte à rebours (5 minutes, inconscience, puis 2 minutes) qui continue même si l'armure est retirée ; à la fin, mort par perforation appliquée automatiquement avec un message au meneur, qui peut l'annuler ou arrêter le compte à rebours ; une rustine ratée n'est pas consommée (test sous le feu : Survie, difficulté Normale, modifiables par le meneur). Seule une armure pressurisée (pressurized) déclenche ce compte à rebours : percer les joints d'une armure non pressurisée n'a pas cet effet. Le meneur peut remettre les joints à « Intact » à la main, sans rustine ni test ; cela vaut colmatage (outil du meneur, en attendant les règles de réparation).
+* Conditions (états) : statuts / icônes de pion Foundry, pas des items ; à implémenter comme ActiveEffects avec statuts personnalisés (Ancré, Flottant, Hypoxie, Exposé, Irradié, Condamné, Saignement, Sonné, Épuisé, etc.) ; le -20 d'Épuisé s'applique automatiquement aux jets, et le meneur peut retirer l'état.
+* Radiations : bouton « appliquer une dose » qui incrémente dose aiguë et cumulée, met à jour la barre colorée, applique le palier atteint (Exposé, Irradié, Condamné) comme condition et propose un tirage de séquelle.
+* Accélération : outil du meneur pour appliquer X g à tous les acteurs d'une scène, avec calcul des pénalités selon la TG.
+* Paramètres du système : seuls les choix encore ouverts de la section 14 peuvent devenir des options de configuration, pour tester les deux versions. Les options degrés, critiques, initiative, blessures, radiations et ressource narrative sont supprimées : ces règles sont fixées (décision du 18 octobre 2026).
+* Compendiums : compétences, atouts, origines, milieux, professions, armes, armures et vêtements, équipement, augmentations, substances, séquelles, logiciels, modules de vaisseau, tables (localisation, séquelles de radiation) ; Journaux pour les factions, organisations et le descriptif du monde.
+* Délai lumière (bonus) : un petit utilitaire qui calcule le délai entre deux lieux du système, pour le meneur.
+
+
+16. Catalogues d’objets:
+
+
+16.1 Les Armes
+
+
+16.2 Les 
+[a]L'équilibre créé entre caractéristiques et compétences me semble bien comme ça.
+[b]Tout a fait d'accord. Nous aborderons les règles concernant les vaisseaux spatiaux plus tard. Car ce sera presque un livre de règle à part entière.
